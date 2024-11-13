@@ -95,7 +95,7 @@ class Voting extends Phaser.Scene {
             fill: "#FFFFFF"
         });
 
-        this.total_value = this.add.text(this.game.config.width*0.4845, this.game.config.height*0.7, this.winCondition, {
+        this.total_value = this.add.text(this.game.config.width*0.4845, this.game.config.height*0.7, this.winCondition-1, {
             fontSize: "60px",
             fontFamily: "Arial",
             fill: "#FFFFFF"
