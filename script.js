@@ -38,6 +38,7 @@ class Voting extends Phaser.Scene {
         this.candidate_2 = 0;
         this.total = 0;
         this.winCondition = 0;
+        this.begun = 0;
     }
 
     preload() {
@@ -77,8 +78,46 @@ class Voting extends Phaser.Scene {
         this.lateksii_logo.setScale(0.06)
 
 
-        this.backgroudBar = this.add.rectangle(this.game.config.width*0.5, this.game.config.height*0.6, this.game.config.width*0.81, 120, 0x000000)
-        this.emptyBar = this.add.rectangle(this.game.config.width*0.5, this.game.config.height*0.6, this.game.config.width*0.8, 100, 0xa5a2a6)
+        this.backgroundBar = this.add.rectangle(this.game.config.width*0.5, this.game.config.height*0.6, this.game.config.width*0.81, 120, 0x000000)
+        // Create the empty bar
+        // Create the empty bar
+        // Create the empty bar
+        this.emptyBar = this.add.rectangle(this.game.config.width * 0.5, this.game.config.height * 0.6, this.game.config.width * 0.8, 100, 0xa5a2a6);
+
+        // Define lighter and darker colors
+        const lighterColor = Phaser.Display.Color.HexStringToColor('#c5c7c9');
+        const darkerColor = Phaser.Display.Color.HexStringToColor('#5c5d5e');
+
+        // Create the tween for pulsing effect
+        this.tweens.addCounter({
+            from: 0,
+            to: 1,
+            duration: 2000,
+            repeat: -1,
+            yoyo: true,
+            ease: 'Sine.easeInOut',
+            onUpdate: (tween) => {
+                if (this.begun == 1) {
+                    // Interpolate between darker and lighter
+                    const progress = tween.getValue();
+                    const interpolatedColor = Phaser.Display.Color.Interpolate.ColorWithColor(
+                        darkerColor,
+                        lighterColor,
+                        1,
+                        progress
+                    );
+    
+                    // Convert to hex and apply to fillColor
+                    const newColor = Phaser.Display.Color.GetColor(
+                        interpolatedColor.r,
+                        interpolatedColor.g,
+                        interpolatedColor.b
+                    );
+    
+                    this.emptyBar.setFillStyle(newColor); // Apply the new color
+                }
+            }
+        });
         this.leftBar = this.add.rectangle(this.game.config.width*0.1, this.game.config.height*0.6, 0, 100, 0x40e0d0)
         this.rightBar = this.add.rectangle(this.game.config.width*0.9, this.game.config.height*0.6, 0, 100, 0xd43dcf)
 
@@ -121,10 +160,6 @@ class Voting extends Phaser.Scene {
             }
         );
 
-        
-
-        
-
         this.candidate_1_status = this.add.text(this.game.config.width*0.37, this.game.config.height*0.67, this.candidate_1, {
             fontSize: "70px",
             fontFamily: "Arial",
@@ -156,7 +191,6 @@ class Voting extends Phaser.Scene {
         });
 
         
-
         // Set up keys
         this.input.keyboard.on('keydown-D', this.increaseLeftBar, this);
         this.input.keyboard.on('keydown-A', this.decreaseLeftBar, this);
@@ -167,7 +201,7 @@ class Voting extends Phaser.Scene {
 
         let borderThickness = 5; // Thickness of the dark frame borders
 
-        // Center border
+        // Center line
         this.add.rectangle(
             this.game.config.width*0.5,
             this.game.config.height*0.6,
@@ -175,18 +209,19 @@ class Voting extends Phaser.Scene {
             150,
             0xFFFFFF
         );
-
-        
-        
     }
+
     showTime() {
         this.blockBar.setVisible(0)
         this.blockText.setVisible(0)
+        this.begun = 1;
     }
 
     noShowTime() {
         this.blockBar.setVisible(1)
         this.blockText.setVisible(1)
+        this.begun = 0;
+        this.emptyBar.setFillStyle(0xa5a2a6);
     }
 
     increaseLeftBar() {
