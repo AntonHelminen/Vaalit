@@ -44,8 +44,8 @@ class PlayGame extends Phaser.Scene {
         this.candidate_2_name = "Eetu Knutars"
         this.candidate_1 = 0;
         this.candidate_2 = 0;
-        this.total = 33;
-        this.winCondition = 17
+        this.total = 40;
+        this.winCondition = 21
     }
 
     preload() {
