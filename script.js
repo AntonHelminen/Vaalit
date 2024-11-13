@@ -1,19 +1,13 @@
-// Dude's bizarre boss battle
-// Based on the course demo and takes inspiration from I wanna be the guy-fangames, which I have played in the past.
-// I used ChatGPT to find bugs in the code and commands for entity destruction handling, trajectory calculation and tween.
-
 let game;
 
-const gameOptions = {
-    dudeGravity: 1500,
-    dudeSpeed: 300,
-    bulletSpeed: 500 // Speed for the bullet
-}
-
 window.onload = function() {
+
     let gameConfig = {
         type: Phaser.AUTO,
         backgroundColor: "#1e105a",
+        dom: {
+            createContainer: true // Enables DOM elements
+        },
         scale: {
             mode: Phaser.Scale.FIT,
             autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -24,28 +18,26 @@ window.onload = function() {
         physics: {
             default: "arcade",
             arcade: {
-                gravity: {
-                    y: 0
-                }
+                gravity: { y: 0 }
             }
         },
-
-        scene: [PlayGame]
-    }
-    game = new Phaser.Game(gameConfig)
+        scene: [Voting]
+    };
+    game = new Phaser.Game(gameConfig);
     window.focus();
 }
 
-class PlayGame extends Phaser.Scene {
+
+class Voting extends Phaser.Scene {
 
     constructor() {
-        super("PlayGame")
+        super("Voting")
         this.candidate_1_name = "Aino Bäcklund"
         this.candidate_2_name = "Eetu Knutars"
         this.candidate_1 = 0;
         this.candidate_2 = 0;
-        this.total = 40;
-        this.winCondition = 21
+        this.total = 0;
+        this.winCondition = 0;
     }
 
     preload() {
@@ -58,6 +50,11 @@ class PlayGame extends Phaser.Scene {
     }
     
     create() {
+        // Retrieve numbers from localStorage
+        const total_votes = parseFloat(localStorage.getItem('total_votes'));
+        const required_votes = parseFloat(localStorage.getItem('required_votes'));
+        this.total = total_votes;
+        this.winCondition = required_votes;
 
         this.radiance_left = this.add.image(game.config.width*0.2, game.config.height*0.39, "radiance")
         this.radiance_right = this.add.image(game.config.width*0.8, game.config.height*0.39, "radiance")
@@ -161,8 +158,8 @@ class PlayGame extends Phaser.Scene {
         
 
         // Set up keys
-        this.input.keyboard.on('keydown-A', this.increaseLeftBar, this);
-        this.input.keyboard.on('keydown-D', this.decreaseLeftBar, this);
+        this.input.keyboard.on('keydown-D', this.increaseLeftBar, this);
+        this.input.keyboard.on('keydown-A', this.decreaseLeftBar, this);
         this.input.keyboard.on('keydown-J', this.increaseRightBar, this);
         this.input.keyboard.on('keydown-L', this.decreaseRightBar, this);
         this.input.keyboard.on('keydown-N', this.showTime, this);

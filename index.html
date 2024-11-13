@@ -1,14 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE-edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vaalit</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Enter Vote amounts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e105a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #form-container {
+            background-color: #2c3e50;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 5px;
+            width: 200px;
+        }
+        button {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <h2>Syötä äänien määrät</h2>
+        <input type="number" id="total_votes" placeholder="Kaikki äänet" required>
+        <input type="number" id="required_votes" placeholder="Voittoon vaaditut äänet" required>
+        <button id="startButton">Äänten laskentaan ></button>
+    </div>
 
-        <script src="script.js" defer></script>
-        <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
-    </head>
-    <body style="background-color: #1e105a;">
-    </body>
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            const total_votes = document.getElementById('total_votes').value;
+            const required_votes = document.getElementById('required_votes').value;
+
+            if (total_votes && required_votes) {
+                // Save the numbers to local storage
+                localStorage.setItem('total_votes', total_votes);
+                localStorage.setItem('required_votes', required_votes);
+
+                window.location.href = 'voting.html';
+            } else {
+                alert("Please enter valid numbers.");
+            }
+        });
+    </script>
+</body>
 </html>
