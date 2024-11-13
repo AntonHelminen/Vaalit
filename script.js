@@ -125,13 +125,13 @@ class Voting extends Phaser.Scene {
 
         
 
-        this.candidate_1_status = this.add.text(this.game.config.width*0.35, this.game.config.height*0.67, this.candidate_1, {
-            fontSize: "60px",
+        this.candidate_1_status = this.add.text(this.game.config.width*0.37, this.game.config.height*0.67, this.candidate_1, {
+            fontSize: "70px",
             fontFamily: "Arial",
             fill: "#FFFFFF"
         });
-        this.candidate_2_status = this.add.text(this.game.config.width*0.63, this.game.config.height*0.67, this.candidate_2, {
-            fontSize: "60px",
+        this.candidate_2_status = this.add.text(this.game.config.width*0.61, this.game.config.height*0.67, this.candidate_2, {
+            fontSize: "70px",
             fontFamily: "Arial",
             fill: "#FFFFFF"
         });
@@ -145,12 +145,12 @@ class Voting extends Phaser.Scene {
         });
 
         this.candidate_1_name = this.add.text(this.game.config.width*0.1, this.game.config.height*0.67, this.candidate_1_name, {
-            fontSize: "60px",
+            fontSize: "70px",
             fontFamily: "Arial",
             fill: "#FFFFFF"
         });
-        this.candidate_2_name = this.add.text(this.game.config.width*0.72, this.game.config.height*0.67, this.candidate_2_name, {
-            fontSize: "60px",
+        this.candidate_2_name = this.add.text(this.game.config.width*0.69, this.game.config.height*0.67, this.candidate_2_name, {
+            fontSize: "70px",
             fontFamily: "Arial",
             fill: "#FFFFFF"
         });
@@ -257,7 +257,7 @@ class Voting extends Phaser.Scene {
     }
     createFloatingText(text, x, y) {
         const floatingText = this.add.text(x, y, text, {
-            fontSize: '60px',
+            fontSize: '90px',
             color: '#fff',
             fontFamily: 'Arial',
             align: 'center'
