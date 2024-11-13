@@ -192,6 +192,7 @@ class Voting extends Phaser.Scene {
     increaseLeftBar() {
         if (this.candidate_1 + this.candidate_2 < this.total) {
             this.candidate_1 += 1;
+            this.createFloatingText("+1", this.game.config.width*0.30, this.game.config.height*0.45);
             this.updateStats();
         }
     }
@@ -199,6 +200,7 @@ class Voting extends Phaser.Scene {
     decreaseLeftBar() {
         if (this.candidate_1 > 0) {
             this.candidate_1 -= 1;
+            this.createFloatingText("-1", this.game.config.width*0.30, this.game.config.height*0.45);
             this.updateStats();
         }
     }
@@ -206,6 +208,7 @@ class Voting extends Phaser.Scene {
     increaseRightBar() {
         if (this.candidate_1 + this.candidate_2 < this.total) {
             this.candidate_2 += 1;
+            this.createFloatingText("+1", this.game.config.width*0.70, this.game.config.height*0.45);
             this.updateStats();
         }
     }
@@ -213,6 +216,7 @@ class Voting extends Phaser.Scene {
     decreaseRightBar() {
         if (this.candidate_2 > 0) {
             this.candidate_2 -= 1;
+            this.createFloatingText("-1", this.game.config.width*0.70, this.game.config.height*0.45);
             this.updateStats();
         }
     }
@@ -248,7 +252,33 @@ class Voting extends Phaser.Scene {
             this.radiance_right.setVisible(0)
         }
         
+        // Create and animate the "+1" text whenever updateStats is called
+        
     }
+    createFloatingText(text, x, y) {
+        const floatingText = this.add.text(x, y, text, {
+            fontSize: '60px',
+            color: '#fff',
+            fontFamily: 'Arial',
+            align: 'center'
+        });
+    
+        floatingText.setOrigin(0.5, 0.5); // Center the text
+    
+        // Add tween effect to make it rise and fade out
+        this.tweens.add({
+            targets: floatingText,
+            y: y - 100,  // Move the text up by 100px
+            alpha: 0,  // Fade out the text
+            duration: 2000,  // Duration of the animation (1 second)
+            ease: 'Power2',  // Easing function for smooth motion
+            onComplete: () => {
+                floatingText.destroy();  // Destroy the text after animation
+            }
+        });
+    }
+
+    
 
     update() {
         // Game logic updates here if needed
