@@ -42,23 +42,25 @@
     <div id="form-container">
         <h2>Syötä äänien määrät</h2>
         <input type="number" id="total_votes" placeholder="Kaikki äänet" required>
-        <input type="number" id="required_votes" placeholder="Voittoon vaaditut äänet" required>
         <button id="startButton">Äänten laskentaan ></button>
     </div>
 
     <script>
         document.getElementById('startButton').addEventListener('click', function() {
-            const total_votes = document.getElementById('total_votes').value;
-            const required_votes = document.getElementById('required_votes').value;
-
-            if (total_votes && required_votes) {
+            let total_votes = parseInt(document.getElementById('total_votes').value); // Ensure total_votes is an integer
+    
+            if (!isNaN(total_votes) && total_votes > 0) { // Ensure valid total_votes
+                // Calculate required_votes as half of total_votes (rounded up)
+                let required_votes = Math.round((total_votes+1) / 2);
+    
                 // Save the numbers to local storage
                 localStorage.setItem('total_votes', total_votes);
                 localStorage.setItem('required_votes', required_votes);
-
+    
+                // Redirect to the voting page
                 window.location.href = 'voting.html';
             } else {
-                alert("Please enter valid numbers.");
+                alert("Please enter a valid number of votes.");
             }
         });
     </script>
